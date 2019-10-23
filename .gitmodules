@@ -1,0 +1,3 @@
+[submodule "host/ext/RS-232"]
+	path = host/ext/RS-232
+	url = https://gitlab.com/Teuniz/RS-232.git
