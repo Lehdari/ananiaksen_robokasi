@@ -17,6 +17,5 @@ target_include_directories(RobokasiHost
 )
 target_link_libraries(RobokasiHost
     PUBLIC
-        rs232
         serialib
 )
