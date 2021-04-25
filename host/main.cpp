@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>
 #include <RS-232/rs232.h>
+#include <serialib.h>
 
 #include <stdlib.h>
 #include <stdio.h>

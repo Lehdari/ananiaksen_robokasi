@@ -7,7 +7,10 @@ set(CMAKE_CXX_STANDARD 17)
 add_subdirectory(ext)
 
 
-add_executable(RobokasiHost main.cpp)
+set(ROBOKASI_HOST_SOURCES ${ROBOKASI_HOST_SOURCES} main.cpp)
+
+
+add_executable(RobokasiHost ${ROBOKASI_HOST_SOURCES})
 target_include_directories(RobokasiHost
     PUBLIC
         ext/
@@ -15,4 +18,5 @@ target_include_directories(RobokasiHost
 target_link_libraries(RobokasiHost
     PUBLIC
         rs232
+        serialib
 )
