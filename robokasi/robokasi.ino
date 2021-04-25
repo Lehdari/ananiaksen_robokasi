@@ -48,23 +48,28 @@ void loop() {
 
   if (serialRead) {
     int a, b, c, d, e, f;
-    sscanf(buf, "A%dB%dC%dD%dE%dF%d", &a, &b, &c, &d, &e, &f);
-    pos[0] = a;
-    pos[1] = b;
-    pos[2] = c;
-    pos[3] = d;
-    pos[4] = e;
-    pos[5] = f;
-    
+    if (sscanf(buf, "A%dB%dC%dD%dE%dF%d", &a, &b, &c, &d, &e, &f) == 6) {
+      pos[0] = a;
+      pos[1] = b;
+      pos[2] = c;
+      pos[3] = d;
+      pos[4] = e;
+      pos[5] = f;
+    }
+
+    Serial.print(buf);
+    /*
     for (int j=0; j<6; ++j) {
       Serial.print(pos[j]);
       Serial.print(" ");
     }
-    
+    */
+    Serial.print("\n");
     Serial.flush();
   }
 
   updateServos();
 
-  delay(100); //Delay in milliseconds
+  delay(10); //Delay in milliseconds
+  Serial.flush();
 }
