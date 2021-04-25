@@ -18,4 +18,5 @@ target_include_directories(RobokasiHost
 target_link_libraries(RobokasiHost
     PUBLIC
         serialib
+        gut_opengl
 )

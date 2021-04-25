@@ -1,3 +1,6 @@
 [submodule "host/ext/serialib"]
 	path = host/ext/serialib
 	url = git@github.com:imabot2/serialib.git
+[submodule "host/ext/GraphicsUtils"]
+	path = host/ext/GraphicsUtils
+	url = git@github.com:Lehdari/GraphicsUtils.git
