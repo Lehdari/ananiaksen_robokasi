@@ -9,6 +9,8 @@
 #include <gut_opengl/Mesh.hpp>
 #include <gut_utils/VertexData.hpp>
 
+#include "utils.hpp"
+
 
 #ifdef _WIN32
 #include <windows.h>
@@ -32,7 +34,7 @@ struct Context {
     char receiveBuffer[512] = {0};
 
     // Robot arm state
-    float state[6] = {90.0f, 90.0f, 90.0f, 90.0f, 90.0f, 120.0f};
+    float state[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
 
     // DH parameters
     Eigen::Matrix<double, 5, 4> dhParameters;
@@ -88,17 +90,33 @@ void render(Context& context, App::Context& appContext)
     // Render imgui
     {
         ImGui::Begin("Camera");
-        ImGui::SliderFloat("A", &context.state[0], 45.f, 135.f);
-        ImGui::SliderFloat("B", &context.state[1], 45.f, 135.f);
-        ImGui::SliderFloat("C", &context.state[2], 45.f, 135.f);
-        ImGui::SliderFloat("D", &context.state[3], 45.f, 135.f);
-        ImGui::SliderFloat("E", &context.state[4], 45.f, 135.f);
-        ImGui::SliderFloat("F", &context.state[5], 90.f, 150.f);
+        ImGui::SliderFloat("A", &context.state[0], -M_PI, M_PI);
+        ImGui::SliderFloat("B", &context.state[1], -M_PI, M_PI);
+        ImGui::SliderFloat("C", &context.state[2], -M_PI, M_PI);
+        ImGui::SliderFloat("D", &context.state[3], -M_PI, M_PI);
+        ImGui::SliderFloat("E", &context.state[4], -M_PI, M_PI);
+        ImGui::SliderFloat("F", &context.state[5], -M_PI, M_PI);
         ImGui::End();
     }
 
     // Render arm
-    context.coordinateFrameMesh.render(context.coordinateFrameShader, context.camera, Mat4f::Identity(), GL_LINES);
+    Mat4d t = Mat4d::Identity();
+    context.coordinateFrameMesh.render(
+        context.coordinateFrameShader, context.camera, t.cast<float>(), GL_LINES);
+
+    for (int i=0; i<5; ++i) {
+        // Link matrix
+        Mat4d l = dhToTransformation(
+            context.dhParameters(i,0),
+            context.dhParameters(i,1),
+            context.dhParameters(i,2),
+            context.dhParameters(i,3));
+
+        t = t * l * zRotation(context.state[i]);
+
+        context.coordinateFrameMesh.render(
+            context.coordinateFrameShader, context.camera, t.cast<float>(), GL_LINES);
+    }
 
     if (context.serialConnected) {
         std::stringstream ss;
@@ -135,7 +153,7 @@ int main(int argc, char const *argv[])
     app.setRenderContext(&context);
 
     // Camera setup - z upwards, fov of 60 degs
-    context.camera.lookAt(Vec3f(10.0f, -3.0f, 5.0f), Vec3f(0.0f, 0.0f, 0.0f), Vec3f(0.0f, 0.0f, 1.0f));
+    context.camera.lookAt(Vec3f(20.0f, -3.0f, 10.0f), Vec3f(0.0f, 0.0f, 5.0f), Vec3f(0.0f, 0.0f, 1.0f));
     context.camera.projection(60.0f*(M_PI/180.0f), 1280.0f/720.0f, 0.1f, 100.0f);
 
     context.coordinateFrameShader.load("../res/shaders/vs_color.glsl", "../res/shaders/fs_color.glsl");
@@ -164,11 +182,13 @@ int main(int argc, char const *argv[])
 
     // Setup DH parameters
     context.dhParameters <<
-        0.0,    0.0,    0.2,    0.0,
-        0.0,    0.0,    0.05,   -M_PI/2.0,
-        0.0,    0.0,    0.25,   0.0,
-        0.0,    0.0,    0.15,   0.0,
-        0.0,    0.05,   0.1,    -M_PI/2.0;
+        0.0,        0.0,    2.0,    0.0,
+        0.0,        0.0,    0.5,    -M_PI/2.0,
+        -M_PI/2.0,  2.5,    0.0,    0.0,
+        0.0,        1.5,    0.0,    0.0,
+        M_PI/2.0,   -0.5,   0.0,    M_PI/2.0;
+
+    std::cout << context.dhParameters << std::endl;
 
     // Connection to serial port
     char errorOpening = context.serial.openDevice(SERIAL_PORT, 9600);
