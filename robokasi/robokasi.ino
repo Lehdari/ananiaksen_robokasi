@@ -1,7 +1,7 @@
 #include <Servo.h>
 
 Servo servo[6];
-const int posMin[] = { 0, 80, 10, 20, 0, 90 };
+const int posMin[] = { 0, 20, 10, 20, 0, 90 };
 const int posMax[] = { 180, 160, 120, 140, 180, 160 };
 // Offset for each joint in degrees
 int offset[] = { 0, 13, -5, 22, -3, 0};
