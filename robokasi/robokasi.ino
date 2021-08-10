@@ -3,8 +3,16 @@
 Servo servo[6];
 const int posMin[] = { 0, 80, 10, 20, 0, 90 };
 const int posMax[] = { 180, 160, 120, 140, 180, 160 };
-int pos[] = { 90, 90, 90, 90, 90, 120 };
-bool dir[] = { true, true, true, true, true, true };
+// Offset for each joint in degrees
+int offset[] = { 0, 13, -5, 22, -3, 0};
+// Initial positions for servos
+int pos[] = { 90 + offset[0], 
+              90 + offset[1], 
+              90 + offset[2], 
+              90 + offset[3], 
+              90 + offset[4], 
+              120 + offset[5]};
+
 
 void updateServos() {
   for (int s=0; s<6; ++s) {
@@ -49,12 +57,12 @@ void loop() {
   if (serialRead) {
     int a, b, c, d, e, f;
     if (sscanf(buf, "A%dB%dC%dD%dE%dF%d", &a, &b, &c, &d, &e, &f) == 6) {
-      pos[0] = a;
-      pos[1] = b;
-      pos[2] = c;
-      pos[3] = d;
-      pos[4] = e;
-      pos[5] = f;
+      pos[0] = a + offset[0];
+      pos[1] = b + offset[1];
+      pos[2] = c + offset[2];
+      pos[3] = d + offset[3];
+      pos[4] = e + offset[4];
+      pos[5] = f + offset[5];
     }
 
     Serial.print(buf);
