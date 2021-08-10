@@ -90,12 +90,12 @@ void render(Context& context, App::Context& appContext)
     // Render imgui
     {
         ImGui::Begin("Camera");
-        ImGui::SliderFloat("A", &context.state[0], -M_PI, M_PI);
-        ImGui::SliderFloat("B", &context.state[1], -M_PI, M_PI);
-        ImGui::SliderFloat("C", &context.state[2], -M_PI, M_PI);
-        ImGui::SliderFloat("D", &context.state[3], -M_PI, M_PI);
-        ImGui::SliderFloat("E", &context.state[4], -M_PI, M_PI);
-        ImGui::SliderFloat("F", &context.state[5], -M_PI, M_PI);
+        ImGui::SliderFloat("A", &context.state[0], -M_PI_2, M_PI_2);
+        ImGui::SliderFloat("B", &context.state[1], -M_PI_2, M_PI_2);
+        ImGui::SliderFloat("C", &context.state[2], -M_PI_2, M_PI_2);
+        ImGui::SliderFloat("D", &context.state[3], -M_PI_2, M_PI_2);
+        ImGui::SliderFloat("E", &context.state[4], -M_PI_2, M_PI_2);
+        ImGui::SliderFloat("F", &context.state[5], -M_PI_2, M_PI_2);
         ImGui::End();
     }
 
