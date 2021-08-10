@@ -147,7 +147,7 @@ int main(int argc, char const *argv[])
     app.setRenderContext(&context);
 
     // Camera setup - z upwards, fov of 60 degs
-    context.camera.lookAt(Vec3f(20.0f, -3.0f, 10.0f), Vec3f(0.0f, 0.0f, 5.0f), Vec3f(0.0f, 0.0f, 1.0f));
+    context.camera.lookAt(Vec3f(10.0f, 10.0f, 10.0f), Vec3f(0.0f, 0.0f, 5.0f), Vec3f(0.0f, 0.0f, 1.0f));
     context.camera.projection(60.0f*(M_PI/180.0f), 1280.0f/720.0f, 0.1f, 100.0f);
 
     context.coordinateFrameShader.load(
