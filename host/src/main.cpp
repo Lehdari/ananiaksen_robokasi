@@ -179,10 +179,10 @@ int main(int argc, char const *argv[])
     // Setup DH parameters
     context.dhParameters <<
         0.0,        0.0,    2.0,    0.0,
-        0.0,        0.0,    0.5,    -M_PI/2.0,
-        -M_PI/2.0,  2.5,    0.0,    0.0,
-        0.0,        1.5,    0.0,    0.0,
-        M_PI/2.0,   -0.5,   0.0,    M_PI/2.0;
+        0.0,        0.0,    0.5,    M_PI_2,
+        M_PI_2,     2.5,    0.0,    M_PI,
+        M_PI_2,     1.5,    0.0,    0.0,
+        M_PI,       -0.5,   0.0,    M_PI_2;
 
     std::cout << context.dhParameters << std::endl;
 
