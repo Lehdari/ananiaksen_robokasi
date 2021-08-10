@@ -119,16 +119,10 @@ void render(Context& context, App::Context& appContext)
     }
 
     if (context.serialConnected) {
-        std::stringstream ss;
-        ss << "A" << int(context.state[0])
-           << "B" << int(context.state[1])
-           << "C" << int(context.state[2])
-           << "D" << int(context.state[3])
-           << "E" << int(context.state[4])
-           << "F" << int(context.state[5]) << std::endl;
+        std::string angleString = serializeAngles(context.state);
 
-        context.serial.writeString(ss.str().c_str());
-        printf("sent: %s\n", ss.str().c_str());
+        context.serial.writeString(angleString.c_str());
+        printf("sent: %s\n", angleString.c_str());
 
         // Receive responses
         for (int i = 0; i < 512; ++i)

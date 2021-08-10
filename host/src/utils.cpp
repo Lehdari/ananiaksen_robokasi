@@ -30,3 +30,29 @@ Mat4d zRotation(double theta)
             0.0,        0.0,            0.0,    1.0;
     return rz;
 }
+
+std::string serializeAngles(float* angles)
+{
+    int degr[6] = {0, 0, 0, 0, 0, 0};
+    
+    for (int i=0; i<6; ++i) {
+
+        degr[i] = round(angles[i]*(180/M_PI))+90;
+        if (degr[i] < 0){
+            degr[i] += 360;   
+        }
+        if (degr[i] >= 360){
+            degr[i] -= 360; 
+        }
+    }
+
+    std::stringstream ss;
+    ss  << "A" << degr[0]
+        << "B" << degr[1]
+        << "C" << degr[2]
+        << "D" << degr[3]
+        << "E" << degr[4]
+        << "F" << degr[5] << std::endl;
+
+    return ss.str();
+}

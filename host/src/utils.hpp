@@ -17,5 +17,6 @@
 
 Mat4d dhToTransformation(double theta, double r, double d, double alpha);
 Mat4d zRotation(double theta);
+std::string serializeAngles(float* angle);
 
 #endif //ROBOKASIHOST_UTILS_HPP
