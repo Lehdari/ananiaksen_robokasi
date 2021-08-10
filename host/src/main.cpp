@@ -156,7 +156,9 @@ int main(int argc, char const *argv[])
     context.camera.lookAt(Vec3f(20.0f, -3.0f, 10.0f), Vec3f(0.0f, 0.0f, 5.0f), Vec3f(0.0f, 0.0f, 1.0f));
     context.camera.projection(60.0f*(M_PI/180.0f), 1280.0f/720.0f, 0.1f, 100.0f);
 
-    context.coordinateFrameShader.load("../res/shaders/vs_color.glsl", "../res/shaders/fs_color.glsl");
+    context.coordinateFrameShader.load(
+        ROBOKASI_HOST_RES("shaders/vs_color.glsl"), 
+        ROBOKASI_HOST_RES("shaders/fs_color.glsl"));
 
     // Vertex data for coordinate frame
     gut::VertexData coordinateFrameVertexData;

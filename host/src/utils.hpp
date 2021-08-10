@@ -13,6 +13,8 @@
 
 #include <gut_utils/MathTypes.hpp>
 
+#define ROBOKASI_HOST_RES(PATH) (std::string(ROBOKASI_HOST_RES_DIR) + "/" + PATH)
+
 Mat4d dhToTransformation(double theta, double r, double d, double alpha);
 Mat4d zRotation(double theta);
 

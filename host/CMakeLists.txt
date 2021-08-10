@@ -18,3 +18,7 @@ target_link_libraries(RobokasiHost
         serialib
         gut_opengl
 )
+target_compile_definitions(RobokasiHost
+    PUBLIC
+        ROBOKASI_HOST_RES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/res/"
+)
